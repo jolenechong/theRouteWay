@@ -6,6 +6,9 @@ import os
 app = Flask(__name__)
 app.secret_key = os.environ.get('FLASK_secret')
 
+from flask_cors import CORS
+cors = CORS(app)
+
 # TODO: configure/initialise db with all "tables"
 
 # configure routes
