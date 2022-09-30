@@ -1,6 +1,5 @@
-import logo from './logo.svg';
+import { useEffect } from 'react';
 import './App.css';
-import {useEffect} from 'react';
 
 function App() {
 
@@ -12,13 +11,12 @@ function App() {
       .then(data => console.log(data));   // log the data to the console
 
   }, [])
-  
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Edit <code>src/App.tsx</code> and save to reload.
         </p>
         <a
           className="App-link"
