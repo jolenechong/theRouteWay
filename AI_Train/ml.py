@@ -4,9 +4,9 @@ from tensorflow import keras
 from keras import layers
 import pandas as pd
 import numpy
-from data_model import DataModel
+from server.data_model import DataModel
 
-training_data = pd.read_csv('./training.csv')
+training_data = pd.read_csv('AI_Model/training.csv')
 
 features = training_data.copy()
 features.pop('Delay')
@@ -47,7 +47,7 @@ model.compile(loss=keras.losses.MeanSquaredError(),
 
               optimizer=keras.optimizers.Adam())
 model.fit(features, labels, epochs=10)
-# model.save("model")
+model.save("model")
 # print(model.predict(features))
 
 # test 
