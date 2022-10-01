@@ -1,22 +1,34 @@
 import Sidebar from '../../components/sidebar';
-import { useRef, useState, useMemo } from 'react'
+import { useState, useEffect } from 'react'
 import { RouteDetails } from '../routesBox';
+import { requestRoute } from '../../pages/route';
 
 interface IProps {
     source: string,
     destination: string,
     setRoutes: React.Dispatch<React.SetStateAction<RouteDetails[]>>,
+    setSelectDetails: React.Dispatch<React.SetStateAction<requestRoute | undefined>>,
+    selectDetails: requestRoute | undefined,
 }
 
 const API = process.env.REACT_APP_API_ENDPOINT
 
-function Form({ source, destination,setRoutes }: IProps) {
+function Form({ source, destination, setRoutes, setSelectDetails, selectDetails }: IProps) {
 
     const [currentSource, setCurrentSource] = useState(source);
     const [currentDestination, setCurrentDestination] = useState(destination);
-
     const [currentDateTime, setCurrentDateTime] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
+
+    
+    useEffect(() => {
+        if (selectDetails !== undefined) {
+            setCurrentSource(selectDetails.source);
+            setCurrentDestination(selectDetails.destination);
+            setCurrentDateTime(selectDetails.datetime);
+        }
+      }, [selectDetails]);
+
 
     const getOutput = async () => {
 
@@ -25,6 +37,7 @@ function Form({ source, destination,setRoutes }: IProps) {
         }
 
         setErrorMsg("");
+        setSelectDetails({ source: currentSource, destination: currentDestination, datetime: currentDateTime });
 
         fetch(API + '/api/fakeoutput', {
             method: 'POST',
@@ -89,6 +102,7 @@ function Form({ source, destination,setRoutes }: IProps) {
                     <p className="tw-mt-4">When are you departing?</p>
                     <input
                         type="datetime-local"
+                        defaultValue={currentDateTime}
                         placeholder="Date and Time of Departure"
                         className="tw-mt-2 tw-w-full tw-p-2 tw-border-lightGrey tw-rounded-md focus:tw-border-primary tw-border-2 tw-outline-none"
                         onChange={(e) => setCurrentDateTime(e.target.value)}

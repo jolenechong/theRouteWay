@@ -9,12 +9,19 @@ interface Object {
   [key: string]: string;
 }
 
+export interface requestRoute {
+  source: string,
+  destination: string,
+  datetime: string,
+}
+
 function GetRoute() {
 
     const [searchParams, setSearchParams] = useSearchParams();
     const [routes, setRoutes] = useState<RouteDetails[]>([]);
     const [displayDir, setDisplayDir] = useState(false);
     const [selectedRoute, setSelectedRoute] = useState<RouteDetails>();
+    const [selectDetails, setSelectDetails] = useState<requestRoute>(); // these is the info given
 
     const source = searchParams.get('source') as string;
     const destination = searchParams.get('destination') as string;
@@ -41,13 +48,28 @@ function GetRoute() {
         // if dw display yet den show all results
         <div className='tw-flex tw-justify-center tw-p-10'>
         <div className='tw-flex-1'>
-        <Form source={source} destination={destination} setRoutes={setRoutes}/>
+        <Form source={source} destination={destination} setRoutes={setRoutes} selectDetails={selectDetails} setSelectDetails={setSelectDetails}/>
         </div>
         <div className='tw-flex-1 tw-pl-10'>
           <>
-          <h1>Retrieveing Your Best Routes...</h1>
+          <h1>Your Best Routes</h1>
             {
               // routes.length !== 0 && (
+                (routes.length == 0 && selectDetails != null) && (
+                  <>
+                  <h1>Retrieving Your Best Routes...</h1>
+                  <div className='tw-rounded-xl tw-bg-blue-100 tw-p-6 tw-relative tw-mt-2'>
+                    <div className='tw-animate-pulse'>
+                        <div className="tw-bg-gray-400 tw-w-54 tw-h-4 tw-rounded-lg"></div>
+                        <div className="tw-my-2"></div>
+                        <div className="tw-bg-gray-400 tw-w-40 tw-h-4 tw-rounded-lg"></div>
+                        <div className="tw-my-2"></div>
+                        <div className="tw-bg-gray-400 tw-w-48 tw-h-4 tw-rounded-lg"></div>
+                  </div>
+                    </div>
+                    </>
+                )
+          }{
                 routes.map((route, index) => {
                   return(
                     <RoutesBox route={route} setDisplayDir={setDisplayDir} setSelectedRoute={setSelectedRoute}/>
