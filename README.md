@@ -11,7 +11,7 @@ server side runs at 3001
 in your clientside env file put this
 ```
 # use this when you talk to the api
-API_ENDPOINT = "http://localhost:3001"
+REACT_APP_API_ENDPOINT=http://localhost:3001
 ```
 
 in your serverside env file put this
