@@ -89,4 +89,4 @@ def predict_delay():
 #             print(road_delay)
 #             total_delay += road_delay
 # print(total_delay)
-# predict_delay()
+print(predict_delay())

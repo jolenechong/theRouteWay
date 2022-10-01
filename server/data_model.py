@@ -30,7 +30,7 @@ class DataModel:
 
     # only accept dates from 2016-2024 cuz it divides very weirdly :") and takes in %d/%m/%Y %H:%M format 
     def from_strdate(self, input):
-        date = datetime.datetime.strptime(input, "%d/%m/%Y %H:%M") # change format here if needed!!!
+        date = datetime.datetime.strptime(input, "%Y-%m-%dT%H:%M") # change format here if needed!!!
         self.day = date.weekday() + 1
         self.month = date.month
         self.year = date.year
