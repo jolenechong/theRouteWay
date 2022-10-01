@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Form from '../../components/form';
-import RoutesBox from '../../components/routesBox';
+import RoutesBox, { RouteDetails } from '../../components/routesBox';
 // @ts-ignore
 import map from '../../data/map.png';
 
@@ -12,10 +12,30 @@ interface Object {
 function GetRoute() {
 
     const [searchParams, setSearchParams] = useSearchParams();
-    const [route, routes] = useState([]);
+    const [routes, setRoutes] = useState<RouteDetails[]>([]);
     const [displayDir, setDisplayDir] = useState(false);
 
-    // TODO: initialise routes from algo here, use useeffect
+    const [roadsToShow, setRoadsToShow] = useState([1,3,5]); // should only have odd numbers
+    const [selectedRoute, setSelectedRoute] = useState<RouteDetails>();
+
+    // TODO: initialise routes from algo here, in the useeffect
+    const testRoute:RouteDetails = 
+      {
+        option: 1,
+        route: [[1, 3, 5]],
+        timeStart: "1.30pm",
+        timeEnd: "2.15pm",
+        destination: "A329",
+        source: "A322",
+        timeNeeded: 40,
+        delay: false,
+      }
+
+      useEffect(() => {
+        setRoutes([
+          testRoute,
+        ])
+      },[])
 
     const source = searchParams.get('source') as string;
     const destination = searchParams.get('destination') as string;
@@ -35,12 +55,11 @@ function GetRoute() {
       return finalDict;
   }
   const roads = importAll(require.context('../../data/roads/', true, /\.(png|jpe?g|svg)$/));
-  const roadsToShow = [1]
-  console.log(roads)
+
+  console.log(routes[0])
 
   return (
     <>
-        <>
         { !displayDir ? 
         // if dw display yet den show all results
         <div className='tw-flex tw-justify-center tw-p-10'>
@@ -49,10 +68,11 @@ function GetRoute() {
         </div>
         <div className='tw-flex-1 tw-pl-10'>
             <h1>Retrieveing Your Best Routes...</h1>
-            {/* only load this part after submitting form and when it returns data */}
-            {/* do mapping frm a list and use this component a few times */}
-            <RoutesBox option={0} timeStart={'6.43pm'} timeEnd={'7.26pm'} destination={destination} source={source} timeNeeded={40} delay={false} route={[]} setDisplayDir={setDisplayDir}/>
-            <RoutesBox option={0} timeStart={'6.43pm'} timeEnd={'7.26pm'} destination={destination} source={source} timeNeeded={40} delay={true} delayTime={5} route={[]} setDisplayDir={setDisplayDir}/>
+            {
+              routes.length !== 0 && (
+                <RoutesBox route={routes[0]} setDisplayDir={setDisplayDir} setSelectedRoute={setSelectedRoute}/>
+              )
+            }
         </div>
         </div>
         :
@@ -62,12 +82,12 @@ function GetRoute() {
             <button onClick={(() => setDisplayDir(false))}>&#60; Back</button>
             <h1 className="tw-pt-8">Map View</h1>
             <p>From {source} to {destination}.</p>
-            <p className='tw-font-bold tw-text-xl'>Option {0}</p>
-            <p className='tw-font-bold tw-text-lg'>{0}: {0}</p>
+            <p className='tw-font-bold tw-text-xl'>Option {selectedRoute?.option}</p>
+            <p className='tw-font-bold tw-text-lg'>{selectedRoute?.timeStart}: {selectedRoute?.timeEnd}</p>
             <p className='tw-font-bold tw-text-lg'>Roads to Pass:</p>
-            {route.map((road, index) => {
-                return <p key={index}>{road}</p>
-            })}
+            {selectedRoute?.route.map((road) => 
+            <p>{road}</p>
+            )}
         </div>
         <div className='tw-shadow tw-w-[80%]'>
           <div className='tw-relative tw-w-full tw-h-screen'>
@@ -79,8 +99,7 @@ function GetRoute() {
           </div>
         </div>
     </div>}
-        </>
-    </>
+      </>
   );
 }
 
