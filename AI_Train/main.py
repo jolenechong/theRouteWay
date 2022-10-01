@@ -2,7 +2,7 @@ import datetime
 from functools import total_ordering
 from math import floor
 from pprint import pprint
-from data_model import DataModel
+from server.data_model import DataModel
 import numpy
 from tensorflow import keras
 
