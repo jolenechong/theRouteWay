@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import Form from '../../components/form';
 import RoutesBox, { RouteDetails } from '../../components/routesBox';
 // @ts-ignore
@@ -16,6 +16,8 @@ export interface requestRoute {
 }
 
 function GetRoute() {
+
+  const navigate = useNavigate();
 
     const [searchParams, setSearchParams] = useSearchParams();
     const [routes, setRoutes] = useState<RouteDetails[]>([]);
@@ -48,11 +50,13 @@ function GetRoute() {
         // if dw display yet den show all results
         <div className='tw-flex tw-justify-center tw-p-10'>
         <div className='tw-flex-1'>
+        <button onClick={(() => navigate(-1))}>&#60; Back</button>
         <Form source={source} destination={destination} setRoutes={setRoutes} selectDetails={selectDetails} setSelectDetails={setSelectDetails}/>
         </div>
         <div className='tw-flex-1 tw-pl-10'>
           <>
-          <h1>Your Best Routes</h1>
+          <h1 className='tw-pt-10'>Your Best Routes</h1>
+          <p className='tw-pb-2'>Pick a Departure Date and Time and explore your options!</p>
             {
               // routes.length !== 0 && (
                 (routes.length == 0 && selectDetails != null) && (
