@@ -1,4 +1,4 @@
-from flask import flash, jsonify, render_template, request, make_response, Blueprint, redirect, url_for, session
+from flask import request, make_response, Blueprint
 import jwt
 import datetime # to expire token
 from flask import current_app
