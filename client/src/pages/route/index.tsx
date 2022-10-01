@@ -87,11 +87,11 @@ function GetRoute() {
             <button onClick={(() => setDisplayDir(false))}>&#60; Back</button>
             <h1 className="tw-pt-8">Map View</h1>
             <p>From {source} to {destination}.</p>
-            <p className='tw-font-bold tw-text-xl'>Option {selectedRoute?.option}</p>
-            <p className='tw-font-bold tw-text-lg'>{selectedRoute?.timeStart}: {selectedRoute?.timeEnd}</p>
-            <p className='tw-font-bold tw-text-lg'>Roads to Pass:</p>
+            <p className='tw-font-semibold tw-pt-6'>Option {selectedRoute?.option}</p>
+            <p className='tw-font-semibold tw-text-lg'>{selectedRoute?.timeStart}: {selectedRoute?.timeEnd}</p>
+            <p className='tw-font-semibold tw-pt-4'>Roads to Pass:</p>
             {selectedRoute?.route.map((road) => 
-            <p>{road}</p>
+            road.map((el) => <p>Road {el}</p>)
             )}
         </div>
         <div className='tw-shadow tw-w-[80%]'>
