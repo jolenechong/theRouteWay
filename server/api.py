@@ -1,4 +1,4 @@
-from flask import request, make_response, Blueprint, jsonify
+from flask import request, make_response, Blueprint, jsonify, Response
 from pprint import pprint
 from AI_Model.data_model import DataModel
 import numpy
@@ -9,53 +9,80 @@ import json
 api = Blueprint('api', __name__)
 
 # initialise saved model 
-model = keras.models.load_model('model')
+# model = keras.models.load_model('model')
 
 @api.route("/test", methods=['GET'])
 def test():
     return jsonify({'message': 'hEllo yES woRking :")'})
 
-# helper functions for model
-def read_input():
-    str = request.get('timestart')
-    # str = input() #take in input from the front end here
-    m = DataModel()
-    m.from_strdate(str)
-    return m.to_row()
+@api.route("/fakeoutput", methods=['GET','POST'])
+def fakeOutput():
+    routes = [
+        {
+            "option": 1,
+            "route": [[1, 3, 5]],
+            "timeStart": "1.30pm",
+            "timeEnd": "2.15pm",
+            "destination": "A329",
+            "source": "A322",
+            "timeNeeded": 40,
+            "delay": 0,
+        },
+        {
+            "option": 2,
+            "route": [[5,7,9,11]],
+            "timeStart": "5.30pm",
+            "timeEnd": "6.09pm",
+            "destination": "A329",
+            "source": "A322",
+            "timeNeeded": 39,
+            "delay": 1,
+            "delayTime": 9
+        }
+    ]
+    return Response(json.dumps(routes),  mimetype='application/json')
 
-def predict(data):
-    return model.predict(data, verbose=1)
+# # helper functions for model
+# def read_input():
+#     str = request.get('timestart')
+#     # str = input() #take in input from the front end here
+#     m = DataModel()
+#     m.from_strdate(str)
+#     return m.to_row()
 
-@api.route('/predict', methods=['POST'])    
-def predict_best_route():
-    '''
-    Very heavy route, will handle both working with model and best route algorithm
-    '''
-    row_input = read_input()
+# def predict(data):
+#     return model.predict(data, verbose=1)
 
-    # initialise empty array to store data
-    prediction_array = []
-    row_input.pop(5)
+# @api.route('/predict', methods=['POST'])    
+# def predict_best_route():
+#     '''
+#     Very heavy route, will handle both working with model and best route algorithm
+#     '''
+#     row_input = read_input()
 
-    # prints prediction of delay for all 32 roads
-    for i in range(32):
-        row_input[4] = i + 1
-        mdata = DataModel()
-        mdata.from_row(row_input)
-        norm_row = mdata.to_row_normalized()
-        norm_row.pop(5)
-        prediction_array.append(norm_row)
-    prediction_array = numpy.array(prediction_array)
+#     # initialise empty array to store data
+#     prediction_array = []
+#     row_input.pop(5)
 
-    # predict delay & store in dictionary format
-    res = predict(prediction_array)
-    predicted_delays = {}
+#     # prints prediction of delay for all 32 roads
+#     for i in range(32):
+#         row_input[4] = i + 1
+#         mdata = DataModel()
+#         mdata.from_row(row_input)
+#         norm_row = mdata.to_row_normalized()
+#         norm_row.pop(5)
+#         prediction_array.append(norm_row)
+#     prediction_array = numpy.array(prediction_array)
 
-    # print(res), max delay is 30 mins
-    for i in range(32):
-        predicted_delays["Road " + str(i + 1)] = max(0, floor(res[i][0] * 30))
+#     # predict delay & store in dictionary format
+#     res = predict(prediction_array)
+#     predicted_delays = {}
+
+#     # print(res), max delay is 30 mins
+#     for i in range(32):
+#         predicted_delays["Road " + str(i + 1)] = max(0, floor(res[i][0] * 30))
         
-    return json.dumps(predicted_delays) #returns dictionary of predicted delays at all 32 roads
+#     return json.dumps(predicted_delays) #returns dictionary of predicted delays at all 32 roads
 
 # return only delays of roads that trucks going through (still need see where to implementtt)
 # total_delay = 0 

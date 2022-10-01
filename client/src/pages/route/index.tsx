@@ -9,6 +9,8 @@ interface Object {
   [key: string]: string;
 }
 
+const API = process.env.REACT_APP_API_ENDPOINT
+
 function GetRoute() {
 
     const [searchParams, setSearchParams] = useSearchParams();
@@ -19,22 +21,19 @@ function GetRoute() {
     const [selectedRoute, setSelectedRoute] = useState<RouteDetails>();
 
     // TODO: initialise routes from algo here, in the useeffect
-    const testRoute:RouteDetails = 
-      {
-        option: 1,
-        route: [[1, 3, 5]],
-        timeStart: "1.30pm",
-        timeEnd: "2.15pm",
-        destination: "A329",
-        source: "A322",
-        timeNeeded: 40,
-        delay: false,
-      }
-
       useEffect(() => {
-        setRoutes([
-          testRoute,
-        ])
+          fetch(API + '/api/fakeoutput', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({a: 1, b: 'Textual content'})
+          }).then(res => res.json())
+          .then(res => {
+            console.log(res);
+            setRoutes(routes);
+          });
       },[])
 
     const source = searchParams.get('source') as string;
@@ -67,12 +66,17 @@ function GetRoute() {
         <Form source={source} destination={destination}/>
         </div>
         <div className='tw-flex-1 tw-pl-10'>
-            <h1>Retrieveing Your Best Routes...</h1>
+          <>
+          <h1>Retrieveing Your Best Routes...</h1>
             {
               routes.length !== 0 && (
-                <RoutesBox route={routes[0]} setDisplayDir={setDisplayDir} setSelectedRoute={setSelectedRoute}/>
+                routes.map((route, index) => {
+                  <RoutesBox route={route} setDisplayDir={setDisplayDir} setSelectedRoute={setSelectedRoute}/>
+                })
               )
             }
+            <p>{routes.toString()}</p>
+          </>
         </div>
         </div>
         :
