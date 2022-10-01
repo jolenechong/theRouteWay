@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, make_response
+from flask import Flask, jsonify, request, make_response, json
 import shelve
 import os
 import datetime
@@ -29,10 +29,11 @@ app.register_blueprint(auth, url_prefix='/auth')
 def test():
     return jsonify({'message': 'hEllo yES woRking :")'})
 
-@app.route('/api/predict', methods=['POST'])
+@app.route('/api/predict', methods=['GET', 'POST'])
 def predict_route_delays():
     def read_input():
-        str = input() #take in input from the front end here
+        str = request.get('timestart')
+        # str = input() #take in input from the front end here
         m = DataModel()
         m.from_strdate(str)
         return m.to_row()
@@ -66,9 +67,19 @@ def predict_route_delays():
     for i in range(32):
         predicted_delays["Road " + str(i + 1)] = max(0, floor(res[i][0] * 30))
         
-    return jsonify(predicted_delays) #returns dictionary of predicted delays at all 32 roads
+    return json.dumps(predicted_delays) #returns dictionary of predicted delays at all 32 roads
 
-    
+# return only delays of roads that trucks going through (still need see where to implementtt)
+# total_delay = 0 
+# routes = [1, 3, 4] #routes that truck is going through from algo
+# for x in range(len(routes)):
+#     for y in range(32): 
+#         if x == y:
+#             road_delay = predicted_delays.get("Road " + str(y + 1))
+#             print(road_delay)
+#             total_delay += road_delay
+# print(total_delay)
+
 # app.register_blueprint(api, url_prefix='/api')
 
 # configure warnings
