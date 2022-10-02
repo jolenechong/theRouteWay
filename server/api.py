@@ -64,16 +64,12 @@ def fakeOutput():
         predicted_delays["Road " + str(i + 1)] = max(0, floor(res[i][0] * 30))
     
     routes = wrapper(req['source'], req['destination'], req['datetime'])
-    for r in routes:
-        odd_roads = []
-        for roads in r['route'][0]:
-            for road in roads.split():
-                if not int(road)%2:
-                    odd_roads.append(int(road)-1)
-                else:
-                    odd_roads.append(int(road))
-        r['timeNeeded'] = round(r['timeNeeded'], 2)
+    # print(routes)
+    # for j in range(len(routes)):
+    #     routes[j]['route'][0] = [y for z in [x.split() for x in routes[j]['route'][0]] for y in z]
+    #     routes[j]['timeNeeded'] = round(routes[j]['timeNeeded'], 2)
 
+    print(routes)
     return Response(json.dumps(routes),  mimetype='application/json')
 
 # @api.route('/predict', methods=['POST'])  

@@ -27,6 +27,7 @@ def wrapper(source, destination, time, delays=test_delay):
         path_len = distances[end]
         total_delay, total_len = 0, 0
         result, path = [], []
+        print(paths)
         if not paths:
             return None
 
