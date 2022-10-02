@@ -32,6 +32,7 @@ def wrapper(source, destination, time, delays=test_delay):
             return None
 
         while not curr == start:
+            print(paths, curr)
             res = get_neighbour_edge(paths[curr], curr)
             total_delay += get_delay(res)
             total_len += get_total_dist(res)
@@ -100,10 +101,7 @@ def wrapper(source, destination, time, delays=test_delay):
         if start_uturn:
             invalid[curr] = (True, start_uturn)
 
-        first_iteration = 0
-        while not pq.isEmpty() or not first_iteration:
-        # while curr != end:
-            first_iteration += 1
+        while True:
             for edge in adj_list[curr]:
                 # print(dist)
                 # print(path)
@@ -145,9 +143,10 @@ def wrapper(source, destination, time, delays=test_delay):
                                 prev, turn_invalid = turn_invalid, ori_invalid
                     visited[edge.to] = True   
 
+            if pq.isEmpty():
+                break
             curr = pq.pop()
 
-        # print(first_iteration)
         # print(dist, path)
         res = find_path(dist, path, start, end)
         if not res:
@@ -158,7 +157,6 @@ def wrapper(source, destination, time, delays=test_delay):
         if result['uturn']:
             result['uturnAt'] = res[4]
         return result, res[3], dist
-        # return dist, path
 
     # print(dijkstra(5, 7, 7))
     # print(dijkstra(3, 5, 5))

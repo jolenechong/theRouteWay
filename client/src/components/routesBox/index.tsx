@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 export interface RouteDetails {
     option: number,
-    route: Array<Array<number>>, // your nested array routes here
+    route: Array<number>, // your nested array routes here
     timeStart: string,
     timeEnd: string,
     destination: string,

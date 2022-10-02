@@ -32,6 +32,7 @@ function GetRoute() {
       let finalDict = {} as Object
       const keys = r.keys()
       const values = r.keys().map(r)
+      console.log("here",keys)
       
       for (let i=0; i <keys.length; i++){
           const key = keys[i].split("/")[1]
@@ -42,7 +43,8 @@ function GetRoute() {
 
       return finalDict;
   }
-  const roads = importAll(require.context('../../data/roads/', true, /\.(png|jpe?g|svg)$/));
+  
+  const roads = importAll(require.context('../../data/roads', false, /\.(png|jpe?g|svg)$/));
   
   return (
     <>
@@ -95,14 +97,14 @@ function GetRoute() {
             <p className='tw-font-semibold tw-text-lg'>{selectedRoute?.timeStart}: {selectedRoute?.timeEnd}</p>
             <p className='tw-font-semibold tw-pt-4'>Roads to Pass:</p>
             {selectedRoute?.route.map((road) => 
-            road.map((el) => <p>Road {el}</p>)
+               <p>Road {road}</p>
             )}
         </div>
         <div className='tw-shadow tw-w-[80%]'>
           <div className='tw-relative tw-w-full tw-h-screen'>
             <img src={map} alt='map' className='tw-h-screen tw-w-full tw-overflow-scroll tw-absolute tw-top-0 tw-right-0'/>
-            {selectedRoute?.route[0].map((road, index) => {
-              return <img src={roads[road]} alt='road' className='tw-h-screen tw-w-full tw-overflow-scroll tw-absolute tw-top-0 tw-right-0'/>
+            {selectedRoute?.route.map((road, index) => {
+              return <img src={roads[road]} alt={`road ${road}`} className='tw-h-screen tw-w-full tw-overflow-scroll tw-absolute tw-top-0 tw-right-0'/>
             })}
 
             <p>{selectedRoute?.route}</p>

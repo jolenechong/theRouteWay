@@ -10,7 +10,7 @@ app = Flask(__name__)
 app.secret_key = os.environ.get('FLASK_secret')
 
 from flask_cors import CORS
-cors = CORS(app)
+CORS(app, support_credentials=True)
 
 # TODO: configure/initialise db with all "tables"
 
@@ -23,12 +23,8 @@ app.register_blueprint(auth, url_prefix='/auth')
 app.register_blueprint(api, url_prefix='/api')
 
 # configure warnings
-if os.environ.get('JWT_secret') is None:
-    print('->> JWT_secret not set in environment!!')
 if os.environ.get('FLASK_secret') is None:
     print('->> FLASK_secret not set in environment!!')
-
-print('hereee', os.environ.get('JWT_secret'))
 
 # UPLOAD_FOLDER = 'static/assets/'
 # app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
