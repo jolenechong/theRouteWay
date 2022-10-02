@@ -32,7 +32,6 @@ function GetRoute() {
       let finalDict = {} as Object
       const keys = r.keys()
       const values = r.keys().map(r)
-      console.log("here",keys)
       
       for (let i=0; i <keys.length; i++){
           const key = keys[i].split("/")[1]
