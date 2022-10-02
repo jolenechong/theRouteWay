@@ -1,22 +1,23 @@
 # PSA Hackathon
 
 ### Setting Up
-in your clientside env file put this
+In your clientside env file put this
 ```
 # use this when you talk to the api
 REACT_APP_API_ENDPOINT=http://localhost:3001
 ```
 
-in your serverside env file put this
+In your serverside env file put this
 ```
 FLASK_secret = "123secret"
 ```
 
-Install the necessary libraries in the frontend (./client) and backend (./server)
-In Frontend: ```npm i``` to install all libraries needed as listed in package.json
+Install the necessary libraries in the frontend (./client) and backend (./server) </br>
+In Frontend: ```npm i``` to install all libraries needed as listed in package.json </br>
+In Backend: ```pip install -r requirements.txt``` to install all libraries needed as listed in requirements.txt
 
 ### Running the App
-We need 2 terminals to run teh frontend and backend of the App.
+We need 2 terminals to run the frontend and backend of the App.
 client side runs at 3000
 server side runs at 3001
 
@@ -47,6 +48,8 @@ OR
 - When are you departing: Try Anytime
 
 ### About the App Directories
-AI_Train has the files with code needed to generate training dataset and train our AI model into our model.h5 file in server.
+client is our frontend while server is our backend. 
 
-ml.py and training.csv are in root, training.csv is our training dataset we used for past deliveries in order to train our AI model.
+training.csv and ml.py are in the root directory, where training.csv is the dummy dataset with mock up deliveries used to train our AI model. 
+
+The trained model is saved into model.h5 which resides in our server.
