@@ -55,6 +55,18 @@ function Form({ source, destination, setRoutes, setSelectDetails, selectDetails 
             setRoutes([]);
     
             for (let i = 0; i < res.length; i++) {
+              const route = res[i].route
+
+              for (let j = 0; j < route.length; j++) {
+                if (route[j] < 15 && route[j] % 2 === 0){
+                  // if its less than 15 and an even number, minus 1
+                  route[j] = route[j] - 1
+                }else if(route[j] > 15 && route[j] < 24 && route[j] % 2 === 0){
+                  // if its greater than 15 and less than 24 and an even number, plus 1
+                  route[j] = route[j] + 1
+                }
+                
+              }
               setRoutes(routes => [...routes, 
                 {
                   "option": res[i].option,
