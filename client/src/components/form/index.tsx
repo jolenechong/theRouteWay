@@ -74,7 +74,7 @@ function Form({ source, destination, setRoutes, setSelectDetails, selectDetails 
                   "timeEnd": res[i].timeEnd,
                   "destination": res[i].destination,
                   "source": res[i].source,
-                  "timeNeeded": res[i].timeNeeded,
+                  "timeNeeded": Math.round(res[i].timeNeeded),
                   "delay": res[i].delay === 0 ? false : true,
                   "delayTime": res[i].delayTime,
                 }

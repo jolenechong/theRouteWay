@@ -43,7 +43,7 @@ OR
 
 OR
 - Source PORT: U3
-- Destination PORT: Y2
+- Destination PORT: Y7
 - When are you departing: Try Anytime
 
 ### About the App Directories
