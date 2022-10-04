@@ -1,5 +1,16 @@
 # PSA Hackathon
 
+Side Project Done for PSA Hackathon 2022. A Traffic Management in Terminal Yard (PS5) With Optimum Route Algorithm & Traffic Delay Prediction.
+<br/>
+The Idea:
+- Develop an Optimal Route algorithm to provide the best route, avoiding delays.
+- Make Early Predictions of Delays so route plans can be made ahead of time.
+- Provide multiple route options, so freedom of choice is still present.
+
+![Gif of Web Application Getting Routes](assets/getRoutesDemo.gif)<br><br>
+![Gif of Web Application View Directions of Routes](assets/viewRoutesDemo.gif)<br><br>
+
+
 ### Setting Up
 In your clientside env file put this
 ```
