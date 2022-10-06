@@ -7,6 +7,7 @@ The Idea:
 - Make Early Predictions of Delays so route plans can be made ahead of time.
 - Provide multiple route options, so freedom of choice is still present.
 
+![Gif of Web Application Home View](assets/home.gif)<br><br>
 ![Gif of Web Application Getting Routes](assets/getRoutesDemo.gif)<br><br>
 ![Gif of Web Application View Directions of Routes](assets/viewRoutesDemo.gif)<br><br>
 
